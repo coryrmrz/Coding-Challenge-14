@@ -19,3 +19,22 @@ async function fetchTickets() { // Async function to fetch all tickets
         console.log('Fetch attempt completed'); // Losg when fetch attempt is complete
     }
 }
+
+// Task 3: Display Tickets Dynamically on the Page
+const apiUrl = 'https://jsonplaceholder.typicode.com/posts'; // API URL for fetching tickets
+fetch(apiUrl) // Fetches all tickets
+    .then(response => response.json()) // Response as JSON
+    .then(products => {
+        products.forEach(ticket => { // Loops through each ticket
+            const listItem = document.createElement('li'); // Creates new list item for each ticket
+            listItem.textContent = `Ticket ID: ${ticket.id} - Customer ID: ${ticket.userId} - Issue: ${ticket.title} - Details: ${ticket.body}`; 
+            ticketsList.appendChild(listItem); // Appends list item to ticket list
+        });
+    })
+    .catch(error => { // Handles any fetch errors
+        console.error('Failed to load tickets. Please try again later.', error); // Logs error message
+    })
+    .finally(() => {
+        console.log('Clean up'); // Logs cleanup message
+    });
+fetchTickets(); // Fetch and display all tickets on page load
